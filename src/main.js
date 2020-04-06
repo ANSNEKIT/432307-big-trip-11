@@ -27,29 +27,29 @@ render(headerTripMain, createTripInfoMain(), `afterbegin`);
 
 const headerTripInfo = header.querySelector(`.trip-info`);
 
-render(headerTripInfo, createTripInfoCost()); // beforeend
+render(headerTripInfo, createTripInfoCost());
 
 const headerTripControls = header.querySelector(`.trip-controls`);
 
-render(headerTripControls, createTripMenu()); // beforeend
-render(headerTripControls, createTripFilters()); // beforeend
+render(headerTripControls, createTripMenu());
+render(headerTripControls, createTripFilters());
 
 const mainTripEvents = document.querySelector(`.trip-events`);
 
-render(mainTripEvents, createTripSort()); // beforeend
-render(mainTripEvents, createTripEditForm()); // beforeend
-render(mainTripEvents, createTripDaysList()); // beforeend
+render(mainTripEvents, createTripSort());
+render(mainTripEvents, createTripEditForm());
+render(mainTripEvents, createTripDaysList());
 
 const mainTripDays = mainTripEvents.querySelector(`.trip-days`);
 
-render(mainTripDays, createTripDay()); // beforeend
+render(mainTripDays, createTripDay());
 
 const mainTripDay = mainTripDays.querySelector(`.day`);
 
-render(mainTripDay, createTripEventsList()); // beforeend
+render(mainTripDay, createTripEventsList());
 
 const mainTripEventsList = mainTripDay.querySelector(`.trip-events__list`);
 
 for (let i = 0; i < TRIP_EVENTS; i++) {
-  render(mainTripEventsList, createTripEvent()); // beforeend
+  render(mainTripEventsList, createTripEvent());
 }
