@@ -4,15 +4,15 @@
 const TRIP_EVENTS = 3;
 
 // createTripInfoMain
-import {createTripInfoMain} from './components/infoMain.js';
-import {createTripInfoCost} from './components/infoCost.js';
+import {createTripInfoMain} from './components/info-main.js';
+import {createTripInfoCost} from './components/info-cost.js';
 import {createTripMenu} from './components/menu.js';
 import {createTripFilters} from './components/filters.js';
 import {createTripSort} from './components/sort.js';
-import {createTripEditForm} from './components/editForm.js';
-import {createTripDaysList} from './components/daysList.js';
+import {createTripEditForm} from './components/edit-form.js';
+import {createTripDaysList} from './components/days-list.js';
 import {createTripDay} from './components/day.js';
-import {createTripEventsList} from './components/eventList.js';
+import {createTripEventsList} from './components/event-list.js';
 import {createTripEvent} from './components/event.js';
 
 
