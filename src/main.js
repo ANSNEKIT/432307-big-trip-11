@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-expressions
 `use strict`;
 
+
 const TRIP_EVENTS = 3;
 
 // createTripInfoMain
@@ -14,6 +15,7 @@ import {createTripDaysList} from './components/days-list.js';
 import {createTripDay} from './components/day.js';
 import {createTripEventsList} from './components/event-list.js';
 import {createTripEvent} from './components/event.js';
+import {filters} from './mock/filters.js';
 
 
 const render = (parent, template, position = `beforeend`) => {
@@ -32,7 +34,7 @@ render(headerTripInfo, createTripInfoCost());
 const headerTripControls = header.querySelector(`.trip-controls`);
 
 render(headerTripControls, createTripMenu());
-render(headerTripControls, createTripFilters());
+render(headerTripControls, createTripFilters(filters));
 
 const mainTripEvents = document.querySelector(`.trip-events`);
 
