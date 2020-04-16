@@ -1,5 +1,5 @@
-const randomInteger = (min, max) => Math.floor(min + Math.random() * (max - min));
+const getRandomInteger = (min, max) => Math.floor(min + Math.random() * (max - min));
 
-const randomElem = (arr) => arr[randomInteger(0, arr.length)];
+const getRandomElem = (arr) => arr[getRandomInteger(0, arr.length)];
 
-export {randomInteger, randomElem};
+export {getRandomInteger, getRandomElem};

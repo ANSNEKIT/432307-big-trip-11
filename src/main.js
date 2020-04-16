@@ -16,9 +16,13 @@ import {createTripDay} from './components/day.js';
 import {createTripEventsList} from './components/event-list.js';
 import {createTripEvent} from './components/event.js';
 import {filters} from './mock/filters.js';
-// import {} from './mock/trip-points.js';
-import {randomInteger, randomElem} from './utils.js';
+import {generateTripPoint} from './mock/trip-point.js';
+import {getRandomInteger} from './utils.js';
 
+// import {getRandomInteger, getRandomElem} from './utils.js';
+
+// Временный лог для отладки
+console.log(generateTripPoint());
 
 const render = (parent, template, position = `beforeend`) => {
   parent.insertAdjacentHTML(position, template);
