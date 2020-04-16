@@ -17,7 +17,7 @@ import {createTripEventsList} from './components/event-list.js';
 import {createTripEvent} from './components/event.js';
 import {filters} from './mock/filters.js';
 // import {} from './mock/trip-points.js';
-// import {} from './utils.js';
+import {randomInteger, randomElem} from './utils.js';
 
 
 const render = (parent, template, position = `beforeend`) => {
