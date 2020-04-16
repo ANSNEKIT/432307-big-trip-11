@@ -17,7 +17,7 @@ import {createTripEventsList} from './components/event-list.js';
 import {createTripEvent} from './components/event.js';
 import {filters} from './mock/filters.js';
 import {generateTripPoint} from './mock/trip-point.js';
-import {getRandomInteger} from './utils.js';
+// import {getRandomInteger} from './utils.js';
 
 // import {getRandomInteger, getRandomElem} from './utils.js';
 

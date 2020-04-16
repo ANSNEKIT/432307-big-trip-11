@@ -2,11 +2,11 @@ import {getRandomInteger, getRandomElem} from '../utils.js';
 
 const tripPointTypes = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Transport`, `Drive`, `Flight`];
 
-const tripTime = {
+/* const tripTime = {
   beginTimes: `10:20`,
   endTimes: `18:40`,
   duration: ``,
-};
+}; */
 
 /* const getDateTime = () => {
   const beginDate = new Date();
@@ -65,7 +65,7 @@ const getTripOffers = (count) => {
   for (let i = 0; i < offerCounts; i++) {
     offers
       .push({
-        title: `offer title - ${Math.random()}`,
+        title: `offer title - ${Math.floor(Math.random() * 100)}`,
         price: getRandomInteger(price.MIN, price.MAX),
       });
   }
@@ -122,8 +122,8 @@ const getTripPoint = () => {
   return {
     type: getRandomElem(tripPointTypes),
     city: getRandomElem(tripEndPoints),
-    dateFrom: new Date(),
-    dateTo: new Date(Date.now() + getRandomInteger(1, 24) * 60 * 60 * 1000),
+    dateFrom: `${new Date()}`,
+    dateTo: `${new Date(Date.now() + getRandomInteger(1, 24) * 60 * 60 * 1000)}`,
     additional: getRandomInteger(0, 5),
     offers: getTripOffers(offerCount),
   };
