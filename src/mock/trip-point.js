@@ -23,7 +23,7 @@ const tripEndPoints = [
 
 const offerCount = {
   MIN: 0,
-  MAX: 3,
+  MAX: 5,
 };
 
 const price = {

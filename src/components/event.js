@@ -12,9 +12,14 @@ const createOffersElem = (pointObj) => {
 };
 
 const createTripEvent = (point) => {
-  const offersElem = point.offers.map((it) => {
+  const offersElem = point.offers
+  .filter((it, count) => {
+    return count < 3;
+  })
+  .map((it) => {
     return createOffersElem(it);
-  }).join(`\n`);
+  })
+  .join(`\n`);
 
   return (
     `<li class="trip-events__item">
