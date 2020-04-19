@@ -51,7 +51,7 @@ const getTripPoint = () => {
   return {
     type: getRandomElem(tripPointTypes),
     city: getRandomElem(tripEndPoints),
-    dateFrom: `${new Date()}`,
+    dateFrom: `${new Date(Date.now() - getRandomInteger(10000000, 3 * 24 * 60 * 60 * 1000))}`,
     dateTo: `${new Date(Date.now() + getRandomInteger(1, 2 * 24 * 60 * 60 * 1000))}`,
     additional: getRandomInteger(0, 5),
     price: getRandomInteger(0, 100),
