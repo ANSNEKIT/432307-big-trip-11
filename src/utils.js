@@ -52,4 +52,12 @@ const getDuration = (beginDate, endDate) => {
   return resultStr;
 };
 
-export {getRandomInteger, getRandomElem, getTime, getDatePoint, getDuration};
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+
+export {getRandomInteger, getRandomElem, getTime, getDatePoint, getDuration, createElement};
