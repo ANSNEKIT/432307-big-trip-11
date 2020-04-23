@@ -1,36 +1,40 @@
 import {tripPointTypes, tripPointTypesMap, tripEndPoints} from '../mock/trip-point.js';
-import {getTime, getDatePoint} from '../utils.js';
+import {getTime, getDatePoint, createElement} from '../utils.js';
 
 const createTypeTransfer = (type, id = 1) => {
+  const typeLower = type.toLowerCase();
+
   return (
     `<div class="event__type-item">
       <input 
-        id="event-type-${type.toLowerCase()}-${id}" 
+        id="event-type-${typeLower}-${id}" 
         class="event__type-input  visually-hidden" 
         type="radio" 
         name="event-type" 
-        value="${type.toLowerCase()}">
+        value="${typeLower}">
 
       <label 
-        class="event__type-label  event__type-label--${type.toLowerCase()}" 
-        for="event-type-${type.toLowerCase()}-${id}">${type}</label>
+        class="event__type-label  event__type-label--${typeLower}" 
+        for="event-type-${typeLower}-${id}">${type}</label>
     </div>`
   );
 };
 
 const createTypeActivity = (type, id = 1) => {
+  const typeLower = type.toLowerCase();
+
   return (
     `<div class="event__type-item">
       <input 
-      id="event-type-${type.toLowerCase()}-${id}" 
+      id="event-type-${typeLower}-${id}" 
       class="event__type-input  visually-hidden" 
       type="radio" 
       name="event-type" 
-      value="${type.toLowerCase()}">
+      value="${typeLower}">
 
     <label 
-      class="event__type-label  event__type-label--${type.toLowerCase()}" 
-      for="event-type-${type.toLowerCase()}-${id}">${type}</label>
+      class="event__type-label  event__type-label--${typeLower}" 
+      for="event-type-${typeLower}-${id}">${type}</label>
     </div>`
   );
 };
@@ -62,6 +66,12 @@ const createTripEditForm = (point) => {
   const destinationList = tripEndPoints.map((it) => createDestinationList(it)).join(`\n`);
   const offerButton = point.offers.map((it) => createOfferButton(it)).join(`\n`);
 
+  const typeLower = point.type.toLowerCase();
+  const dateFrom = getDatePoint(point.dateFrom);
+  const TimeFrom = getTime(point.dateFrom);
+  const dateTo = getDatePoint(point.dateTo);
+  const TimeTo = getTime(point.dateTo);
+
   return (
     `<li class="trip-events__item">
     <form class="event  event--edit" action="#" method="post">
@@ -69,7 +79,7 @@ const createTripEditForm = (point) => {
       <div class="event__type-wrapper">
         <label class="event__type  event__type-btn" for="event-type-toggle-1">
           <span class="visually-hidden">Choose event type</span>
-          <img class="event__type-icon" width="17" height="17" src="img/icons/${point.type.toLowerCase()}.png" alt="Event type icon">
+          <img class="event__type-icon" width="17" height="17" src="img/icons/${typeLower}.png" alt="Event type icon">
         </label>
         <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -102,12 +112,12 @@ const createTripEditForm = (point) => {
         <label class="visually-hidden" for="event-start-time-1">
           From
         </label>
-        <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${getDatePoint(point.dateFrom)} ${getTime(point.dateFrom)}">
+        <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dateFrom} ${TimeFrom}">
         —
         <label class="visually-hidden" for="event-end-time-1">
           To
         </label>
-        <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${getDatePoint(point.dateTo)} ${getTime(point.dateTo)}">
+        <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dateTo} ${TimeTo}">
       </div>
 
       <div class="event__field-group  event__field-group--price">
@@ -148,4 +158,25 @@ const createTripEditForm = (point) => {
   );
 };
 
-export {createTripEditForm};
+export default class EditForm {
+  constructor(point) {
+    this._point = point;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripEditForm();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
