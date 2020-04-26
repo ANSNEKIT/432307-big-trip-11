@@ -14,7 +14,7 @@ import EditFormComponent from './components/edit-form.js';
 
 import {filters} from './mock/filters.js';
 import {generateTripPoints} from './mock/trip-point.js';
-import {render, renderPosition} from './utils.js';
+import {render, renderPosition, getRandomInteger} from './utils.js';
 
 const TRIP_EVENTS = 20;
 
@@ -27,7 +27,7 @@ render(headerTripMain, new InfoMainComponent().getElement(), renderPosition.AFTE
 
 const headerTripInfo = header.querySelector(`.trip-info`);
 
-render(headerTripInfo, new InfoCostComponent().getElement(), renderPosition.BEFOREEND);
+render(headerTripInfo, new InfoCostComponent(getRandomInteger(100, 5000)).getElement(), renderPosition.BEFOREEND);
 
 const headerTripControls = header.querySelector(`.trip-controls`);
 
@@ -39,28 +39,24 @@ const mainTripEvents = document.querySelector(`.trip-events`);
 
 render(mainTripEvents, new SortComponent().getElement(), renderPosition.AFTERBEGIN);
 
-const renderTripDays = (tripsArr) => {
-  const daysMap = new Map();
+const renderTripDays = (routePoints) => {
+  const days = new Map();
 
-  tripsArr
+  routePoints
   .slice()
   .sort((a, b) => (Date.parse(a.dateFrom) - Date.parse(b.dateFrom)))
   .forEach((it) => {
     const dateTime = Date.parse(it.dateFrom);
     const dateEqualHours = new Date(dateTime).setHours(12, 0, 0, 0);
 
-    if (daysMap.has(dateEqualHours)) {
-      daysMap.get(dateEqualHours).push(it);
+    if (days.has(dateEqualHours)) {
+      days.get(dateEqualHours).push(it);
 
     } else {
-      const newArr = [];
-
-      newArr.push(it);
-
-      daysMap.set(dateEqualHours, newArr);
+      days.set(dateEqualHours, [it]);
     }
 
-    return daysMap;
+    return days;
 
   });
 
@@ -68,11 +64,11 @@ const renderTripDays = (tripsArr) => {
 
   render(mainTripEvents, daysList.getElement(), renderPosition.BEFOREEND);
 
-  // console.log(daysMap);
+  // console.log(days);
 
   let count = 0;
 
-  daysMap.forEach((day, key) => {
+  days.forEach((day, key) => {
     count++;
 
     const tripDay = new DayComponent(key, count);

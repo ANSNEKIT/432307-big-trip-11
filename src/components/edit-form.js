@@ -1,41 +1,27 @@
 import {tripPointTypes, tripPointTypesMap, tripEndPoints} from '../mock/trip-point.js';
 import {getTime, getDatePoint, createElement} from '../utils.js';
 
-const createTypeTransfer = (type, id = 1) => {
+const group = [`Transfer`, `Activity`];
+
+const createType = (groupType, type, id = 1) => {
   const typeLower = type.toLowerCase();
 
   return (
-    `<div class="event__type-item">
-      <input 
-        id="event-type-${typeLower}-${id}" 
-        class="event__type-input  visually-hidden" 
-        type="radio" 
-        name="event-type" 
-        value="${typeLower}">
+    `<fieldset class="event__type-group">
+      <legend class="visually-hidden">${groupType}</legend>
+      <div class="event__type-item">
+        <input 
+          id="event-type-${typeLower}-${id}" 
+          class="event__type-input  visually-hidden" 
+          type="radio" 
+          name="event-type" 
+          value="${typeLower}">
 
-      <label 
-        class="event__type-label  event__type-label--${typeLower}" 
-        for="event-type-${typeLower}-${id}">${type}</label>
-    </div>`
-  );
-};
-
-const createTypeActivity = (type, id = 1) => {
-  const typeLower = type.toLowerCase();
-
-  return (
-    `<div class="event__type-item">
-      <input 
-      id="event-type-${typeLower}-${id}" 
-      class="event__type-input  visually-hidden" 
-      type="radio" 
-      name="event-type" 
-      value="${typeLower}">
-
-    <label 
-      class="event__type-label  event__type-label--${typeLower}" 
-      for="event-type-${typeLower}-${id}">${type}</label>
-    </div>`
+        <label 
+          class="event__type-label  event__type-label--${typeLower}" 
+          for="event-type-${typeLower}-${id}">${type}</label>
+      </div>
+    </fieldset>`
   );
 };
 
@@ -61,8 +47,8 @@ const createOfferButton = (offer) => {
 };
 
 const createTripEditForm = (point) => {
-  const typeItemTransfer = tripPointTypes.slice(0, 7).map((it) => createTypeTransfer(it)).join(`\n`);
-  const typeItemActivity = tripPointTypes.slice(7).map((it) => createTypeActivity(it)).join(`\n`);
+  const typeItemTransfer = tripPointTypes.slice(0, 7).map((it) => createType(group[0], it)).join(`\n`);
+  const typeItemActivity = tripPointTypes.slice(7).map((it) => createType(group[1], it)).join(`\n`);
   const destinationList = tripEndPoints.map((it) => createDestinationList(it)).join(`\n`);
   const offerButton = point.offers.map((it) => createOfferButton(it)).join(`\n`);
 
@@ -84,17 +70,8 @@ const createTripEditForm = (point) => {
         <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
         <div class="event__type-list">
-          <fieldset class="event__type-group">
-            <legend class="visually-hidden">Transfer</legend>
-
-            ${typeItemTransfer}
-          </fieldset>
-
-          <fieldset class="event__type-group">
-            <legend class="visually-hidden">Activity</legend>
-
-            ${typeItemActivity}
-          </fieldset>
+          ${typeItemTransfer}
+          ${typeItemActivity}
         </div>
       </div>
 
