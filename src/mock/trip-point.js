@@ -67,4 +67,10 @@ const generateTripPoints = (count) => {
     .map(generateTripPoint);
 };
 
-export {tripPointTypes, tripPointTypesMap, tripEndPoints, generateTripPoint, generateTripPoints};
+export {
+  tripPointTypes,
+  tripPointTypesMap,
+  tripEndPoints,
+  generateTripPoint,
+  generateTripPoints
+};

@@ -1,81 +1,109 @@
 // eslint-disable-next-line no-unused-expressions
 `use strict`;
 
-// createTripInfoMain
-import {createTripInfoMain} from './components/info-main.js';
-import {createTripInfoCost} from './components/info-cost.js';
-import {createTripMenu} from './components/menu.js';
-import {createTripFilters} from './components/filters.js';
-import {createTripSort} from './components/sort.js';
-// import {createTripEditForm} from './components/edit-form.js';
-import {createTripDaysList} from './components/days-list.js';
-// import {createTripDay} from './components/day.js';
-// import {createTripEventsList} from './components/event-list.js';
-// import {createTripEvent} from './components/event.js';
+import InfoMainComponent from './components/info-main.js';
+import InfoCostComponent from './components/info-cost.js';
+import MenuComponent from './components/menu.js';
+import FilterComponent from './components/filters.js';
+import SortComponent from './components/sort.js';
+
+import DaysListComponent from './components/days-list.js';
+import DayComponent from './components/day.js';
+import PointComponent from './components/event.js';
+import EditFormComponent from './components/edit-form.js';
+
 import {filters} from './mock/filters.js';
 import {generateTripPoints} from './mock/trip-point.js';
-// import {getDuration} from './utils.js';
+import {render, renderPosition} from './utils.js';
 
-const TRIP_EVENTS = 6;
+const TRIP_EVENTS = 20;
 
 const trips = generateTripPoints(TRIP_EVENTS);
-const days = new Map();
-
-trips.slice()
-    .sort((a, b) => (Date.parse(a.dateFrom) - Date.parse(b.dateFrom)))
-    .forEach((it) => {
-      const dateTime = Date.parse(it.dateFrom);
-      const dateEqualHours = new Date(dateTime).setHours(12, 0, 0, 0);
-
-      if (days.has(dateEqualHours)) {
-        days.get(dateEqualHours).push(it);
-
-      } else {
-        const newArr = [];
-
-        newArr.push(it);
-
-        days.set(dateEqualHours, newArr);
-      }
-
-    });
-
-const render = (parent, template, position = `beforeend`) => {
-  parent.insertAdjacentHTML(position, template);
-};
 
 const header = document.querySelector(`.page-header`);
 const headerTripMain = header.querySelector(`.trip-main`);
 
-render(headerTripMain, createTripInfoMain(), `afterbegin`);
+render(headerTripMain, new InfoMainComponent().getElement(), renderPosition.AFTERBEGIN);
 
 const headerTripInfo = header.querySelector(`.trip-info`);
 
-render(headerTripInfo, createTripInfoCost());
+render(headerTripInfo, new InfoCostComponent().getElement(), renderPosition.BEFOREEND);
 
 const headerTripControls = header.querySelector(`.trip-controls`);
 
-render(headerTripControls, createTripMenu());
-render(headerTripControls, createTripFilters(filters));
+render(headerTripControls, new MenuComponent().getElement(), renderPosition.AFTERBEGIN);
+
+render(headerTripControls, new FilterComponent(filters).getElement(), renderPosition.AFTERBEGIN);
 
 const mainTripEvents = document.querySelector(`.trip-events`);
 
-render(mainTripEvents, createTripSort());
-render(mainTripEvents, createTripDaysList(days));
+render(mainTripEvents, new SortComponent().getElement(), renderPosition.AFTERBEGIN);
 
-// const mainTripDays = mainTripEvents.querySelector(`.trip-days`);
-// const mainTripEventsList = mainTripDays.querySelector(`.trip-events__list`);
+const renderTripDays = (tripsArr) => {
+  const daysMap = new Map();
 
-// const mainTripDay = mainTripDays.querySelectorAll(`.day`);
+  tripsArr
+  .slice()
+  .sort((a, b) => (Date.parse(a.dateFrom) - Date.parse(b.dateFrom)))
+  .forEach((it) => {
+    const dateTime = Date.parse(it.dateFrom);
+    const dateEqualHours = new Date(dateTime).setHours(12, 0, 0, 0);
 
-// const mainTripFirstEventsList = mainTripDays.querySelector(`.trip-events__list`);
+    if (daysMap.has(dateEqualHours)) {
+      daysMap.get(dateEqualHours).push(it);
 
-// render(mainTripFirstEventsList, createTripEditForm(trips[0]));
+    } else {
+      const newArr = [];
 
-// console.log(`days `, days);
+      newArr.push(it);
 
-// for (const oneEventList of mainTripEventsList) {
-//   days.forEach((day) => {
-//     day.forEach((point) => render(oneEventList, createTripEvent(point)));
-//   });
-// }
+      daysMap.set(dateEqualHours, newArr);
+    }
+
+    return daysMap;
+
+  });
+
+  const daysList = new DaysListComponent();
+
+  render(mainTripEvents, daysList.getElement(), renderPosition.BEFOREEND);
+
+  // console.log(daysMap);
+
+  let count = 0;
+
+  daysMap.forEach((day, key) => {
+    count++;
+
+    const tripDay = new DayComponent(key, count);
+    const eventsList = tripDay.getElement().querySelector(`.trip-events__list`);
+    // const points = day;
+
+    render(daysList.getElement(), tripDay.getElement(), renderPosition.BEFOREEND);
+
+    day.map((point) => {
+      const onRollupBtn = () => {
+        eventsList.replaceChild(editFormComponent.getElement(), pointComponent.getElement());
+      };
+
+      const onEditFormSubmit = (evt) => {
+        evt.preventDefault();
+        eventsList.replaceChild(pointComponent.getElement(), editFormComponent.getElement());
+      };
+
+      const pointComponent = new PointComponent(point);
+      const rollupBtn = pointComponent.getElement().querySelector(`.event__rollup-btn`);
+      rollupBtn.addEventListener(`click`, onRollupBtn);
+
+      const editFormComponent = new EditFormComponent(point);
+      const editForm = editFormComponent.getElement().querySelector(`form.event--edit`);
+      editForm.addEventListener(`submit`, onEditFormSubmit);
+
+      return render(eventsList, pointComponent.getElement(), renderPosition.BEFOREEND);
+    });
+
+  });
+
+};
+
+renderTripDays(trips);

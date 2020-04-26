@@ -59,5 +59,30 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
+const renderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
 
-export {getRandomInteger, getRandomElem, getTime, getDatePoint, getDuration, createElement};
+const render = (parent, element, position) => {
+  switch (position) {
+    case renderPosition.AFTERBEGIN:
+      parent.prepend(element);
+      break;
+    case renderPosition.BEFOREEND:
+      parent.append(element);
+      break;
+  }
+};
+
+
+export {
+  getRandomInteger,
+  getRandomElem,
+  getTime,
+  getDatePoint,
+  getDuration,
+  createElement,
+  renderPosition,
+  render,
+};

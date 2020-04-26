@@ -28,7 +28,7 @@ export default class Filter {
   }
 
   getTemplate() {
-    return createTripFilters();
+    return createTripFilters(this._filters);
   }
 
   getElement() {

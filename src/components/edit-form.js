@@ -165,7 +165,7 @@ export default class EditForm {
   }
 
   getTemplate() {
-    return createTripEditForm();
+    return createTripEditForm(this._point);
   }
 
   getElement() {
