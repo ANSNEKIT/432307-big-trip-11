@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomElem} from '../utils.js';
+import {getRandomInteger, getRandomElem} from '../utils/common.js';
 
 const tripText = [
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,

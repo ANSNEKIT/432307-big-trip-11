@@ -1,6 +1,6 @@
-import {getDatePoint} from '../utils.js';
+import AbstractComponent from './abstractComponent.js';
 import {MONTH_NAMES} from '../const.js';
-import {createElement} from '../utils.js';
+import {getDatePoint} from '../utils/common.js';
 
 
 const createTripDay = (dateMillisecond, count) => {
@@ -21,25 +21,15 @@ const createTripDay = (dateMillisecond, count) => {
   );
 };
 
-export default class Day {
+export default class Day extends AbstractComponent {
   constructor(dateMillisecond, count) {
+    super();
+
     this._dateMillisecond = dateMillisecond;
     this._count = count;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripDay(this._dateMillisecond, this._count);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

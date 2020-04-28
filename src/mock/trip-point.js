@@ -1,5 +1,5 @@
 import {getTripDestination} from './trip-destination.js';
-import {getRandomInteger, getRandomElem} from '../utils.js';
+import {getRandomInteger, getRandomElem} from '../utils/common.js';
 
 const tripPointTypes = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Check-in`, `Sightseeing`, `Restaurant`];
 

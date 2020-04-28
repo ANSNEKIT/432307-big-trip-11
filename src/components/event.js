@@ -1,5 +1,6 @@
+import AbstractComponent from './abstractComponent.js';
 import {tripPointTypesMap} from '../mock/trip-point.js';
-import {getTime, getDatePoint, getDuration, createElement} from '../utils.js';
+import {getTime, getDatePoint, getDuration} from '../utils/common.js';
 
 const createOffersElem = (point) => {
 
@@ -66,25 +67,20 @@ const createTripEvent = (point) => {
   );
 };
 
-export default class Point {
+export default class Point extends AbstractComponent {
   constructor(point) {
+    super();
+
     this._point = point;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripEvent(this._point);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  setDownButtonClickHandler(handler) {
+    this.getElement().querySelector(`.event__rollup-btn`)
+      .addEventListener(`click`, handler);
   }
 
-  removeElement() {
-    this._element = null;
-  }
 }
