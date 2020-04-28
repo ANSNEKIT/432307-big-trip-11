@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createTripInfoMain = () => {
   return (
     `<section class="trip-main__trip-info  trip-info">
@@ -11,4 +13,24 @@ const createTripInfoMain = () => {
   );
 };
 
-export {createTripInfoMain};
+export default class InfoMain {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripInfoMain();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

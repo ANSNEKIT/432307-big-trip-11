@@ -52,4 +52,37 @@ const getDuration = (beginDate, endDate) => {
   return resultStr;
 };
 
-export {getRandomInteger, getRandomElem, getTime, getDatePoint, getDuration};
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+const renderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
+const render = (parent, element, position) => {
+  switch (position) {
+    case renderPosition.AFTERBEGIN:
+      parent.prepend(element);
+      break;
+    case renderPosition.BEFOREEND:
+      parent.append(element);
+      break;
+  }
+};
+
+
+export {
+  getRandomInteger,
+  getRandomElem,
+  getTime,
+  getDatePoint,
+  getDuration,
+  createElement,
+  renderPosition,
+  render,
+};

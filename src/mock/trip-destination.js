@@ -38,7 +38,7 @@ const getPointImage = (objCount) => {
 
   for (let i = 0; i < lengthPhoto; i++) {
     photos.push({
-      src: `http://picsum.photos/248/152?r=${Math.random()}`,
+      src: `http://picsum.photos/248/152?r=${Math.random() * 10}`,
       description: `alt-${i}`
     });
   }
