@@ -1,5 +1,6 @@
+import AbstractComponent from './abstractComponent.js';
 import {tripPointTypes, tripPointTypesMap, tripEndPoints} from '../mock/trip-point.js';
-import {getTime, getDatePoint, createElement} from '../utils.js';
+import {getTime, getDatePoint} from '../utils/common.js';
 
 const group = [`Transfer`, `Activity`];
 
@@ -152,25 +153,29 @@ const createTripEditForm = (point) => {
   );
 };
 
-export default class EditForm {
+export default class EditForm extends AbstractComponent {
   constructor(point) {
+    super();
+
     this._point = point;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripEditForm(this._point);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  setSubmitHandler(handler) {
+    this.getElement().querySelector(`form`)
+      .addEventListener(`submit`, handler);
   }
 
-  removeElement() {
-    this._element = null;
+  setDeleteClickhandler(handler) {
+    this.getElement().querySelector(`.event__reset-btn`)
+      .addEventListener(`click`, handler);
+  }
+
+  setUpClickhandler(handler) {
+    this.getElement().querySelector(`.event__rollup-btn`)
+      .addEventListener(`click`, handler);
   }
 }

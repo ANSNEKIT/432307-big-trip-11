@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstractComponent.js';
 
 const sortingList = [`Event`, `Time`, `Price`];
 
@@ -28,25 +28,8 @@ const createTripSort = () => {
   );
 };
 
-export default class Sort {
-  constructor() {
-    this._element = null;
-
-  }
-
+export default class Sort extends AbstractComponent {
   getTemplate() {
     return createTripSort();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
