@@ -47,9 +47,9 @@ const renderTripDays = (container, routePoints) => {
 */
 
 
-const renderPointsInDay = (eventsList, points, onDataChange) => {
+const renderPointsInDay = (eventsList, points, onDataChange, onViewChange) => {
   return points.map((point) => {
-    const pointController = new PointController(eventsList, onDataChange);
+    const pointController = new PointController(eventsList, onDataChange, onViewChange);
 
     pointController.render(point);
 
@@ -64,8 +64,9 @@ export default class TripController {
     this._days = new Map();
     this._count = 0;
     this._points = [];
-    this._onDataChange = this._onDataChange.bind(this);
     this._showedPointControllers = [];
+    this._onDataChange = this._onDataChange.bind(this);
+    this._onViewChange = this._onViewChange.bind(this);
     this._daysListComponent = new DaysListComponent();
     this._dayComponent = null;
   }
@@ -102,7 +103,7 @@ export default class TripController {
 
       render(this._daysListComponent.getElement(), this._dayComponent, renderPosition.BEFOREEND);
 
-      const newPoints = renderPointsInDay(eventsList, this._points, this._onDataChange);
+      const newPoints = renderPointsInDay(eventsList, this._points, this._onDataChange, this._onViewChange);
 
       this._showedPointControllers = this._showedPointControllers.concat(newPoints);
 
@@ -119,6 +120,10 @@ export default class TripController {
     this._points = [].concat(this._points.slice(0, index), newData, this._points.slice(index + 1));
 
     pointController.render(this._points[index]);
+  }
+
+  _onViewChange() {
+    this._showedPointControllers.forEach((controllerPoint) => controllerPoint.setDefaultView());
   }
 
 }
