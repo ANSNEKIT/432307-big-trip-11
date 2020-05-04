@@ -1,4 +1,4 @@
-import AbstractComponent from './abstractComponent.js';
+import AbstractComponent from './abstract-component.js';
 import {MONTH_NAMES} from '../const.js';
 import {getDatePoint} from '../utils/common.js';
 
