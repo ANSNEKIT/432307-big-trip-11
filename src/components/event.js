@@ -1,4 +1,4 @@
-import AbstractComponent from './abstractComponent.js';
+import AbstractComponent from './abstract-component.js';
 import {tripPointTypesMap} from '../mock/trip-point.js';
 import {getTime, getDatePoint, getDuration} from '../utils/common.js';
 
@@ -78,7 +78,7 @@ export default class Point extends AbstractComponent {
     return createTripEvent(this._point);
   }
 
-  setDownButtonClickHandler(handler) {
+  setMoreInfoButtonClickHandler(handler) {
     this.getElement().querySelector(`.event__rollup-btn`)
       .addEventListener(`click`, handler);
   }

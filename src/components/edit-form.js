@@ -1,5 +1,5 @@
-import AbstractComponent from './abstractComponent.js';
-import {tripPointTypes, tripPointTypesMap, tripEndPoints} from '../mock/trip-point.js';
+import AbstractSmartComponent from "./abstract-smart-component.js";
+import {tripPointTypes, tripEndPoints} from '../mock/trip-point.js';
 import {getTime, getDatePoint} from '../utils/common.js';
 
 const group = [`Transfer`, `Activity`];
@@ -63,6 +63,7 @@ const createTripEditForm = (point) => {
   const TimeFrom = getTime(point.dateFrom);
   const dateTo = getDatePoint(point.dateTo);
   const TimeTo = getTime(point.dateTo);
+  const isFavorite = true;
 
   return (
     `<li class="trip-events__item">
@@ -83,7 +84,7 @@ const createTripEditForm = (point) => {
 
           <div class="event__field-group  event__field-group--destination">
             <label class="event__label  event__type-output" for="event-destination-1">
-              ${tripPointTypesMap.get(point.type)}
+              ${point.type}
             </label>
             <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${point.city}" list="destination-list-1">
             <datalist id="destination-list-1">
@@ -114,7 +115,7 @@ const createTripEditForm = (point) => {
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
           <button class="event__reset-btn" type="reset">Delete</button>
 
-          <input id="event-favorite-1" class="event__favorite-checkbox  visually-hidden" type="checkbox" name="event-favorite" checked="">
+          <input id="event-favorite-1" class="event__favorite-checkbox  visually-hidden" type="checkbox" name="event-favorite" ${isFavorite ? `checked` : ``}>
           <label class="event__favorite-btn" for="event-favorite-1">
             <span class="visually-hidden">Add to favorite</span>
             <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
@@ -153,29 +154,77 @@ const createTripEditForm = (point) => {
   );
 };
 
-export default class EditForm extends AbstractComponent {
+export default class EditForm extends AbstractSmartComponent {
   constructor(point) {
     super();
 
     this._point = point;
+    this._submitHandler = null;
+    this._favoriteHandler = null;
+
+    // this._subscribeOnEvents();
   }
 
   getTemplate() {
     return createTripEditForm(this._point);
   }
 
-  setSubmitHandler(handler) {
-    this.getElement().querySelector(`form`)
-      .addEventListener(`submit`, handler);
+  setSubmitFormHandler(handler) {
+    this.getElement()
+    .querySelector(`form`)
+    .addEventListener(`submit`, handler);
+
+    this._submitHandler = handler;
   }
 
-  setDeleteClickhandler(handler) {
-    this.getElement().querySelector(`.event__reset-btn`)
-      .addEventListener(`click`, handler);
-  }
+  /* setDeleteClickhandler(handler) {
+    this.getElement()
+    .querySelector(`.event__reset-btn`)
+    .addEventListener(`click`, handler);
+  } */
 
   setUpClickhandler(handler) {
-    this.getElement().querySelector(`.event__rollup-btn`)
-      .addEventListener(`click`, handler);
+    this.getElement()
+    .querySelector(`.event__rollup-btn`)
+    .addEventListener(`click`, handler);
+
+    this.setUpHandler = handler;
   }
+
+  setFavoritesButtonClickHandler(handler) {
+    this.getElement()
+    .querySelector(`#event-favorite-1`)
+    .addEventListener(`click`, handler);
+
+    this._favoriteHandler = handler;
+  }
+
+  setTypeEventHandler(handler) {
+    this.getElement()
+    .querySelector(`.event__type-list`)
+    .addEventListener(`change`, handler);
+
+    this._typeEventHandler = handler;
+  }
+
+  setCityHandler(handler) {
+    this.getElement()
+    .querySelector(`.event__field-group`)
+    .addEventListener(`change`, handler);
+
+    this._typeCityHandler = handler;
+  }
+
+  recoveryListeners() {
+    this.setFavoritesButtonClickHandler(this._favoriteHandler);
+    this.setSubmitFormHandler(this._sumbitHandler);
+    this.setUpClickhandler(this._setUpHandler);
+    this.setTypeEventHandler(this._typeEventHandler);
+    this.setCityHandler(this._typeCityHandler);
+  }
+
+  rerender() {
+    super.rerender();
+  }
+
 }
