@@ -1,20 +1,23 @@
 // eslint-disable-next-line no-unused-expressions
 `use strict`;
 
+import {generateTripPoints} from './mock/trip-point.js';
+import {getRandomInteger} from './utils/common.js';
+import {render, renderPosition} from './utils/render.js';
+
 import InfoMainComponent from './components/info-main.js';
 import InfoCostComponent from './components/info-cost.js';
 import MenuComponent from './components/menu.js';
-import FilterComponent from './components/filters.js';
+// import FilterComponent from './components/filters.js';
 import SortComponent from './components/sort.js';
 
 import PointsModel from './models/points.js';
 
-import TripController from './controllers/trip.js';
+import TripController from './controllers/trip-controller.js';
+import FilterController from './controllers/filter-controller.js';
 
-import {filters} from './mock/filters.js';
-import {generateTripPoints} from './mock/trip-point.js';
-import {getRandomInteger} from './utils/common.js';
-import {render, renderPosition} from './utils/render.js';
+// import {filters} from './mock/filters.js';
+
 
 const TRIP_EVENTS = 20;
 
@@ -36,7 +39,10 @@ const headerTripControls = header.querySelector(`.trip-controls`);
 
 render(headerTripControls, new MenuComponent(), renderPosition.AFTERBEGIN);
 
-render(headerTripControls, new FilterComponent(filters), renderPosition.AFTERBEGIN);
+// render(headerTripControls, new FilterComponent(filters), renderPosition.AFTERBEGIN);
+
+const filterController = new FilterController(headerTripControls, pointsModel);
+filterController.render();
 
 const mainTripEvents = document.querySelector(`.trip-events`);
 

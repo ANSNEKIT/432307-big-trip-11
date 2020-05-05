@@ -1,7 +1,7 @@
 import DaysListComponent from '../components/days-list.js';
 import DayComponent from '../components/day.js';
 
-import PointController from './point.js';
+import PointController from './point-controller.js';
 
 import {render, renderPosition} from '../utils/render.js';
 

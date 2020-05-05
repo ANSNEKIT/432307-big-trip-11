@@ -52,6 +52,15 @@ const getDuration = (beginDate, endDate) => {
   return resultStr;
 };
 
+const isRepeating = (repeatingDays) => {
+  return Object.values(repeatingDays).some(Boolean);
+};
+
+const isOverdueDate = (dueDate, date) => {
+  return dueDate < date && !isOneDay(date, dueDate);
+};
+
+
 export {
   getRandomInteger,
   getRandomElem,

@@ -25,6 +25,7 @@ export default class Points {
 
     this._callHandlers(this._dataChangeHandlers);
 
+    // eslint-disable-next-line consistent-return
     return true;
   }
 

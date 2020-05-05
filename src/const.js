@@ -13,4 +13,10 @@ const MONTH_NAMES = [
   `December`,
 ];
 
-export {MONTH_NAMES};
+const FilterType = {
+  EVERYTHING: `everything`,
+  FUTURE: `future`,
+  PAST: `past`,
+};
+
+export {MONTH_NAMES, FilterType};
