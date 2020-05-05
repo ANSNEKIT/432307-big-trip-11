@@ -49,6 +49,7 @@ const getTripOffers = (count) => {
 
 const getTripPoint = () => {
   return {
+    id: String(new Date() + Math.random() * 1000),
     type: getRandomElem(tripPointTypes),
     city: getRandomElem(tripEndPoints),
     dateFrom: `${new Date(Date.now() - getRandomInteger(10000000, 3 * 24 * 60 * 60 * 1000))}`,

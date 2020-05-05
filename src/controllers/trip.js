@@ -58,20 +58,21 @@ const renderPointsInDay = (eventsList, points, onDataChange, onViewChange) => {
 };
 
 export default class TripController {
-  constructor(container) {
+  constructor(container, pointsModel) {
     this._container = container;
+    this._pointsModel = pointsModel;
 
     this._days = new Map();
     this._count = 0;
-    this._points = [];
+
     this._showedPointControllers = [];
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
     this._daysListComponent = new DaysListComponent();
-    this._dayComponent = null;
   }
 
-  render(routeTrips) {
+  render() {
+    const routeTrips = this._pointsModel.getPoints();
     routeTrips
     .slice()
     .sort((a, b) => (Date.parse(a.dateFrom) - Date.parse(b.dateFrom)))
@@ -87,6 +88,11 @@ export default class TripController {
 
       return this._days;
     });
+
+    /*
+    TODO Сделать проверку на отсутствие точек, и отрисовать соответстствующий компонент
+    const isEmptyPoints = routeTrips.length === 0;
+    */
 
     render(this._container, this._daysListComponent, renderPosition.BEFOREEND);
 
@@ -111,15 +117,12 @@ export default class TripController {
   }
 
   _onDataChange(pointController, oldData, newData) {
-    const index = this._points.findIndex((it) => it === oldData);
+    const isSucsess = this._pointsModel.updatePoints(oldData.id, newData);
 
-    if (index === -1) {
-      return;
+    if (isSucsess) {
+      pointController.render(newData);
     }
 
-    this._points = [].concat(this._points.slice(0, index), newData, this._points.slice(index + 1));
-
-    pointController.render(this._points[index]);
   }
 
   _onViewChange() {
